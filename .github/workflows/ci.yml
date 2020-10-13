@@ -1,0 +1,28 @@
+name: CI
+
+on: 
+  schedule:
+    - cron: */2 * * * *
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+  steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: npm install
+      run: |
+        npm install
+      
+    - name: Run a one-line script
+      run: echo Hello, world!
+      
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+        
