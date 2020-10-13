@@ -4,23 +4,26 @@
 name: youth_read
 
 on:
+  workflow_dispatch:
   schedule:
-   - cron: '*/29 19-23 * * *'
+    - cron: '44 19-23 * * *'
+  watch:
+    types: started
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          npm install
-      - name: '运行 【中青看点自动阅读】'
-        run: |
-          node Youth_Read.js
-        env:
-          YOUTH_READ: ${{ secrets.YOUTH_READ }}
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: npm install
+      run: |
+        npm install
+    - name: '运行 【中青看点自动阅读】'
+      run: |
+        node Youth_Read.js
+      env:
+        YOUTH_READ: ${{ secrets.YOUTH_READ }}
