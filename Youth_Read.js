@@ -16,7 +16,7 @@ async function downFile () {
 }
 
 async function changeFiele () {
-   let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
+   let content = await fs.readFileSync('./Youth_Read.js', 'utf8')
    content = content.replace(/var Key = ''/, `var Key = '${KEY}'`)
    await fs.writeFileSync( './Youth_Read.js', content, 'utf8')
 }
