@@ -10,24 +10,6 @@ on:
     types: started
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Checkout codes
-              uses: actions/checkout@v2
-            - name: Use Node.js
-              uses: actions/setup-node@v1
-              with:
-                node-version: '12.x'
-            - name: Run app
-              run: npm install
-            - run: node app.js
-              env:
-                JD_COOKIE: ${{ secrets.JD_COOKIE }}
-                PUSH_KEY: ${{ secrets.PUSH_KEY }}
-
-jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
