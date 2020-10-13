@@ -1,0 +1,25 @@
+{
+    "name": "actions",
+    "version": "1.0.0",
+    "description": "",
+    "main": "Youth_Read.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/smiek/Actions.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/smiek/Actions/issues"
+    },
+    "homepage": "https://github.com/smiek/Actions#readme",
+    "dependencies": {
+      "download": "^8.0.0",
+      "request": "^2.88.2",
+      "request-promise": "^4.2.5"
+    }
+  }
