@@ -31,8 +31,8 @@ async function start() {
   await downFile();
   console.log('下载代码完毕')
   // 替换变量
-  await changeFiele();
-  console.log('替换变量完毕')
+  //await changeFiele();
+  //console.log('替换变量完毕')
   // 执行
   await exec("node Youth_Read.js");
   console.log('执行完毕')
