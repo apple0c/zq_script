@@ -8,7 +8,7 @@ const rp = require('request-promise')
 const download = require('download')
 
 // 公共变量
-const READ = process.env.YOUTH_READ
+const KEY = process.env.YOUTH_READ
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js'
@@ -17,13 +17,13 @@ async function downFile () {
 
 async function changeFiele () {
    let content = await fs.readFileSync('./Youth_Read.js', 'utf8')
-   content = content.replace(/var Key = ''/, `var Key = '${READ}'`)
+   content = content.replace(/var Key = ''/, `var Key = '${KEY}'`)
    await fs.writeFileSync( './Youth_Read.js', content, 'utf8')
 }
 
 
 async function start() {
-  if (!READ) {
+  if (!KEY) {
     console.log('请填写 YOUTH_READ 后在继续')
     return
   }
@@ -34,7 +34,13 @@ async function start() {
   await changeFiele();
   console.log('替换变量完毕')
   // 执行
-  await exec("node Youth_Read.js");
+  await exec("node Youth_Read.js >> result.txt");
+  const path = "./result.txt";
+  let content = "";
+  if (fs.existsSync(path)) {
+    content = fs.readFileSync(path, "utf8");
+  }
+  console.log(content)
   console.log('执行完毕')
 
 }
