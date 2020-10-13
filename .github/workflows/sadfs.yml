@@ -1,7 +1,6 @@
 name: asdfa
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: '* * * * *'
 jobs:
