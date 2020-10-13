@@ -1,4 +1,4 @@
-name: Github JD-sign bot
+name: youth_read
 
 on:
   workflow_dispatch:
