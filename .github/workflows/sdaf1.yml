@@ -1,8 +1,11 @@
 name: Github JD-sign bot
 
 on:
-    schedule:
-        - cron: '32 20 * * *'
+  workflow_dispatch:
+  schedule:
+     - cron: '34 20 * * *'
+  watch:
+    types: started
 jobs:
     build:
         runs-on: ubuntu-latest
