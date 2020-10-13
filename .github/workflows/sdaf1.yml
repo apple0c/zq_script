@@ -5,7 +5,7 @@ on:
         branches:
             - master
     schedule:
-        - cron: '23 20 * * *'
+        - cron: '27 20 * * *'
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -17,5 +17,10 @@ jobs:
               uses: actions/setup-node@v1
               with:
                 node-version: '12.x'
-            - name: Run app
-              run: npm install
+            - name: npm install
+              run: |
+                npm install
+            - name: '运行 【中青看点自动阅读】'
+              run: |
+                echo Add other actions to build,
+                echo test, and deploy your project.
