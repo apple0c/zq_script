@@ -23,6 +23,6 @@ jobs:
       - name: Run app
         run: npm install
       - name: '运行 【中青看点自动阅读】'
-        run: node Youth_Read.js
+        run: node https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ }}
