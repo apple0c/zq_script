@@ -17,7 +17,7 @@ async function downFile () {
 
 async function changeFiele () {
    let content = await fs.readFileSync('./Youth_Read.js', 'utf8')
-   content = content.replace(/var Key = ''/, `var Key = '${KEY}'`)
+   content = content.replace(/var Key = ''/, `var Key = '${READ}'`)
    await fs.writeFileSync( './Youth_Read.js', content, 'utf8')
 }
 
@@ -31,8 +31,8 @@ async function start() {
   await downFile();
   console.log('下载代码完毕')
   // 替换变量
-  //await changeFiele();
-  //console.log('替换变量完毕')
+  await changeFiele();
+  console.log('替换变量完毕')
   // 执行
   await exec("node Youth_Read.js");
   console.log('执行完毕')
