@@ -17,7 +17,7 @@ jobs:
           node-version: '12.x'
       - name: Run app
         run: npm install
-      - name: '运行 【中青看点分享】'
-        run: node Youth_Share.js
-        #env:
-          #YOUTH_READ: ${{ secrets.YOUTH_READ }}
+      #- name: '运行 【中青看点分享】'
+      #  run: node Youth_Share.js
+      #  env:
+      #    YOUTH_READ: ${{ secrets.YOUTH_READ }}
