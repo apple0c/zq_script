@@ -1,7 +1,10 @@
 
 const $ = new Env("中青看点")
-await AutoRead();
-
+!(async () => {
+  await AutoRead();
+})()
+  .catch((e) => $.logErr(e))
+  .finally(() => $.done())
 
 function AutoRead() {
   return new Promise((resolve, reject) => {
@@ -11,8 +14,9 @@ function AutoRead() {
       'User-Agent': 'KDApp/1.7.8 (iPhone; iOS 14.0; Scale/3.00)'
       }
     };
+    console.log(url);
     $.get(url, (err, resp, data) => {
-      console.log(data)
+      console.log(data);
     })
   })
 }
