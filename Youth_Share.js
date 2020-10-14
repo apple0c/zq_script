@@ -1,10 +1,6 @@
 
 const $ = new Env("中青看点")
- !(async () => {
-  await AutoRead();
-})()
-  .catch((e) => $.logErr(e))
-  .finally(() => $.done())
+await AutoRead();
 
 
 function AutoRead() {
