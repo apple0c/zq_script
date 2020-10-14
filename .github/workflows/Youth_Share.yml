@@ -2,10 +2,8 @@ name: youth_share
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/29 10-14 * * *'
-  watch:
-    types: [started]
+  #schedule:
+  #  - cron: '*/29 10-14 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,5 +19,5 @@ jobs:
         run: npm install
       - name: '运行 【中青看点分享】'
         run: node Youth_Share.js
-        env:
+        #env:
           #YOUTH_READ: ${{ secrets.YOUTH_READ }}
