@@ -6,7 +6,7 @@ name: youth_read
 on:
   workflow_dispatch:
   schedule:
-    - cron: '29 10-14 * * *'
+    - cron: '10 16-20/2 * * *'
   watch:
     types: [started]
 jobs:
