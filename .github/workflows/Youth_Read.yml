@@ -25,8 +25,16 @@ jobs:
       - name: '运行 【中青看点自动阅读-文章】'
         run: node Youth_Read.js
         env:
-          YOUTH_READ: ${{ secrets.YOUTH_READ }}
-      - name: '运行 【中青看点自动阅读-视频】'
+          YOUTH_READ: ${{ secrets.YOUTH_READ1 }}
+      - name: '运行 【中青看点自动阅读-文章2】'
         run: node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ2 }}
+      - name: '运行 【中青看点自动阅读-视频】'
+        run: node Youth_Read.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ3 }}
+      - name: '运行 【中青看点自动阅读-视频2】'
+        run: node Youth_Read.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ4 }}
