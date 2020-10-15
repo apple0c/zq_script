@@ -1,11 +1,40 @@
 
 const $ = new Env("中青看点")
-
-!(async () => {
+let ReadArr = [], articlebody ='';
+let YOUTH_READ = [ '','',];
+  if (process.env.YOUTH_READ && process.env.YOUTH_READ.split('&') && process.env.YOUTH_READ.split('&').length > 0) {
+  YouthBody = process.env.YOUTH_READ.split('&');
+  }
+  else if (process.env.YOUTH_READ && process.env.YOUTH_READ.split('\n') && process.env.YOUTH_READ.split('\n').length > 0) {
+  YouthBody = process.env.YOUTH_READ.split('\n');
+  }
+  Object.keys(YouthBody).forEach((item) => {
+        if (YouthBody[item]) {
+          ReadArr.push(YouthBody[item])
+        }
+    })
+      console.log(`\n============ 脚本执行来自 Github Action  ==============\n`)
+      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
+ !(async () => {
+  if (!ReadArr[0]) {
+    console.log($.name, '【提示】请把抓包的请求体填入Github 的 Secrets 中，请以&隔开')
+    return;
+  }
+  for (let i = 0; i < ReadArr.length; i++) {
+    if (ReadArr[i]) {
+      articlebody = ReadArr[i];
+      $.index = i + 1;
+      console.log(`-------------------------\n\n开始中青看点第${$.index}次阅读`)
+    }
+  console.log(articlebody);
+ }
+   console.log(`-------------------------\n\n中青看点共完成${$.index}次阅读，阅读请求全部结束`)
+/*!(async () => {
   console.log("执行");
   console.log(process.env.YOUTH_READ1);
   console.log(process.env.YOUTH_READ2);
-  console.log("结束");
+  console.log("结束");*/
   //await AutoRead();
 })()
   .catch((e) => $.logErr(e))
