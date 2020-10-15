@@ -22,7 +22,11 @@ jobs:
           node-version: '12.x'
       - name: Run app
         run: npm install
-      - name: '运行 【中青看点自动阅读】'
+      - name: '运行 【中青看点自动阅读-文章】'
         run: node Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ }}
+      - name: '运行 【中青看点自动阅读-视频】'
+        run: node Youth_Read.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ2 }}
