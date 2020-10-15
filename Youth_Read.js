@@ -58,7 +58,7 @@ function AutoRead() {
         };
         $.post(url, (error, response, data) => {
            let readres = JSON.parse(data);
-             console.log(data)
+             //console.log(data)
            if (readres.error_code == '0' && typeof readres.items.read_score === 'number') {
               console.log(`\n本次阅读获得${readres.items.read_score}个青豆，即将开始下次阅读\n`)
             } 
