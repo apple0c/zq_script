@@ -40,7 +40,7 @@ function AutoRead1() {
     return new Promise((resolve, reject) => {
       setTimeout(()=> {
        console.log(articlebody);
-        
+        resolve()
       },s)
     })
 }
