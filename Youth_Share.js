@@ -1,5 +1,6 @@
 let s = 2000 //等待延迟30s
 const $ = new Env("中青看点")
+//const notify = $.isNode() ? require('./sendNotify') : '';
 let ReadArr = [], articlebody ='';
 let YOUTH_READ = [ '','',];
   if (process.env.YOUTH_READ && process.env.YOUTH_READ.split('&') && process.env.YOUTH_READ.split('&').length > 0) {
@@ -30,19 +31,18 @@ let YOUTH_READ = [ '','',];
   await AutoRead1();
  }
    console.log(`-------------------------\n\n中青看点共完成${$.index}次阅读，阅读请求全部结束`)
-/*!(async () => {
-  console.log("执行");
-  console.log(process.env.YOUTH_READ1);
-  console.log(process.env.YOUTH_READ2);
-  console.log("结束");*/
-  //await AutoRead();
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
+
+
 function AutoRead1() {
-    setTimeout(()=> {
-      console.log(articlebody);
-    },s)
+    return new Promise((resolve, reject) => {
+      setTimeout(()=> {
+       console.log(articlebody);
+        
+      },s)
+    })
 }
 function AutoRead() {
   return new Promise((resolve, reject) => {
