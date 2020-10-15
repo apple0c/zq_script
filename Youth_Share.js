@@ -27,10 +27,7 @@ let YOUTH_READ = [ '','',];
       $.index = i + 1;
       console.log(`-------------------------\n\n开始中青看点第${$.index}次阅读`)
     }
-    setTimeout(()=> {
-      console.log(articlebody);
-    },s)
-  
+  await AutoRead1();
  }
    console.log(`-------------------------\n\n中青看点共完成${$.index}次阅读，阅读请求全部结束`)
 /*!(async () => {
@@ -42,7 +39,11 @@ let YOUTH_READ = [ '','',];
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
-
+function AutoRead1() {
+    setTimeout(()=> {
+      console.log(articlebody);
+    },s)
+}
 function AutoRead() {
   return new Promise((resolve, reject) => {
     let url = {
