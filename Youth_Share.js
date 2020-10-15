@@ -1,5 +1,8 @@
 
 const $ = new Env("中青看点")
+console.log(process.env.YOUTH_READ1);
+console.log(process.env.YOUTH_READ2);
+return;
 !(async () => {
   await AutoRead();
 })()
