@@ -1,4 +1,4 @@
-
+let s = 2000 //等待延迟30s
 const $ = new Env("中青看点")
 let ReadArr = [], articlebody ='';
 let YOUTH_READ = [ '','',];
@@ -27,7 +27,10 @@ let YOUTH_READ = [ '','',];
       $.index = i + 1;
       console.log(`-------------------------\n\n开始中青看点第${$.index}次阅读`)
     }
-  console.log(articlebody);
+    setTimeout(()=> {
+      console.log(articlebody);
+    },s)
+  
  }
    console.log(`-------------------------\n\n中青看点共完成${$.index}次阅读，阅读请求全部结束`)
 /*!(async () => {
