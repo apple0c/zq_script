@@ -20,5 +20,8 @@ jobs:
       - name: '运行 【中青看点分享】'
         run: node Youth_Share.js
         env:
-          YOUTH_READ1: ${{ secrets.YOUTH_READ1 }}
-          YOUTH_READ2: ${{ secrets.YOUTH_READ2 }}
+          YOUTH_READ: ${{ secrets.YOUTH_READ }}
+      - name: '运行 【中青看点分享2】'
+        run: node Youth_Share.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ2 }}
