@@ -39,8 +39,19 @@ let YOUTH_READ = [ '','',];
 function AutoRead1() {
     return new Promise((resolve, reject) => {
       setTimeout(()=> {
-       console.log(articlebody);
-        resolve()
+       let url = {
+            url: `https://www.baidu.com`,
+            headers: {
+            'User-Agent': 'KDApp/1.7.8 (iPhone; iOS 14.0; Scale/3.00)'
+            },
+            body: articlebody
+        };
+        $.post(url, (error, response, data) => {
+          let readres = JSON.parse(data);
+          console.log(url)
+           
+          resolve()
+        })
       },s)
     })
 }
