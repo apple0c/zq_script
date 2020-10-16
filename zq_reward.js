@@ -101,9 +101,8 @@ function friendRead() {
             headers: JSON.parse(friendreadheaderVal),
             body: bodyVal,
         }
-        console.log(signurl)
-
         $.post(signurl, (error, response, data) => {
+            console.log(data)
             signres = JSON.parse(data)
             if (signres.status == 2) {
                 signresult = `签到失败，Cookie已失效‼️`;
