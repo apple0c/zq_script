@@ -134,51 +134,49 @@ function signInfo() {
 //10位好友阅读
 function friendRead() {
     return new Promise((resolve, reject) => {
-        var timestamp = Date.parse(new Date())/1000;
-        let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-        const signurl = {
-            url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
-            headers: JSON.parse(friendreadheaderVal),
-            body: bodyVal,
-        }
-        $.post(signurl, (error, response, data) => {
-            signres = JSON.parse(data)
-            if (signres.status == 2) {
-                signresult = `签到失败，Cookie已失效‼️`;
-                $.msg($.name, signresult, "");
-                return;
-            } else if (signres.status == 1) {
-                detail += `【10位好友阅读】奖励领取成功 🎉 青豆: +500`
-            } else if (signres.status == 0) {
-                detail += `【10位好友阅读】${signres.msg}`;
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            const signurl = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
+                headers: JSON.parse(friendreadheaderVal),
+                body: bodyVal,
             }
-            resolve()
-        })
+            $.post(signurl, (error, response, data) => {
+                signres = JSON.parse(data)
+                if (signres.status == 2) {
+                    signresult = `签到失败，Cookie已失效‼️`;
+                    $.msg($.name, signresult, "");
+                    return;
+                } else if (signres.status == 1) {
+                    detail += `【10位好友阅读】奖励领取成功 🎉 青豆: +500\n`
+                } else if (signres.status == 0) {
+                    detail += `【10位好友阅读】${signres.msg}\n`;
+                }
+                resolve()
+            })
+        },s);
     })
 }
-// 日常任务奖励
+// 每日时段红包
 function dailyTasks() {
     return new Promise((resolve, reject) => {
-        var timestamp = Date.parse(new Date())/1000;
-        let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-        const signurl = {
-            url: 'https://kd.youth.cn/WebApi/Task/receiveBereadRed',
-            headers: JSON.parse(signheaderVal),
-        }
-        $.get(signurl, (error, response, data) => {
-            signres = JSON.parse(data)
-            console.log(signres)
-            if (signres.status == 0) {
-                signresult = `签到失败，Cookie已失效‼️`;
-                $.msg($.name, signresult, "");
-                return;
-            } else if (signres.status == 1) {
-                detail += `【日常任务奖励】奖励领取成功 🎉 青豆: +500`
-            } else if (signres.status == 0) {
-                detail += `【日常任务奖励】${signres.msg}`;
+        setTimeout(() => {
+            const signurl = {
+                url: 'https://kd.youth.cn/WebApi/Task/receiveBereadRed',
+                headers: JSON.parse(signheaderVal),
             }
-            resolve()
-        })
+            $.get(signurl, (error, response, data) => {
+                signres = JSON.parse(data)
+                console.log(signres)
+                if(signres.code == 1) {
+                    detail += `【每日时段红包】奖励领取成功 🎉 青豆: +${signres.data.score}\n`
+                }else{
+
+                }
+                resolve()
+            })
+        },s);
     })
 }
 async function showmsg() {
