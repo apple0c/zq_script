@@ -18,7 +18,9 @@ jobs:
       - name: Run app
         run: npm install
       - name: '运行 【执行】'
-        run: node https://github.com/lxk0301/scripts/blob/master/jd_joy.js
+        run: node Youth_Share.js
+        env:
+          JD_COOKIE: ${{ secrets.YOUTH_READ }}
       #- name: '运行 【中青看点分享】'
       #  run: node Youth_Share.js
       #  env:
