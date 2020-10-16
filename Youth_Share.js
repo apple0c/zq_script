@@ -16,6 +16,7 @@ async function downFile () {
     const url = URL
     console.log(url)
     let content = await fs.readFileSync(url, 'utf8')
+    console.log('注释1')
     await fs.writeFileSync('./app.js',content, 'utf8')
 }
 
