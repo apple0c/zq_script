@@ -40,29 +40,13 @@ if ($.isNode()) {
             readArr.push(ARTBODYs[item])
         }
     })
-    Object.keys(REDBODYs).forEach((item) => {
-        if (REDBODYs[item]) {
-            redpArr.push(REDBODYs[item])
-        }
-    })
-    Object.keys(READTIME).forEach((item) => {
-        if (READTIME[item]) {
-            timeArr.push(READTIME[item])
-        }
-    })
     console.log(`============ 共${cookiesArr.length}个中青账号  =============\n`)
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
 } else {
     cookiesArr.push($.getdata('youthheader_friendread_s'));
     readArr.push($.getdata('youthbody_friendread_s'));
-    redpArr.push($.getdata('red_zq'));
-    timeArr.push($.getdata('readtime_zq'));
 }
-
-const firstcheck = $.getdata('signt');
-const runtimes = $.getdata('times');
-const opboxtime = $.getdata('opbox');
 
 if (isGetCookie = typeof $request !== 'undefined') {
     GetCookie();
@@ -78,12 +62,11 @@ if (isGetCookie = typeof $request !== 'undefined') {
         if (cookiesArr[i]) {
             friendreadheaderVal = cookiesArr[i];
             friendreadbodyVal = readArr[i];
-            timebodyVal = timeArr[i];
-            redpbodyVal = redpArr[i];
             $.index = i + 1;
             console.log(`-------------------------\n\n开始【中青看点${$.index}】`)
         }
-        await friendRead();
+        console.log($.time())
+        // await friendRead();
 
         if ($.isNode() && $.time('HH') > 20 && $.time('HH') < 22) {
             // await endCard();
@@ -112,10 +95,11 @@ function GetCookie() {
 //10位好友阅读
 function friendRead() {
     return new Promise((resolve, reject) => {
+        let bodyVal = articlebodyVal.replace(/request_time=(d+)/, `request_time='${cookie}'`);
         const signurl = {
             url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
             headers: JSON.parse(signheaderVal),
-            body: articlebodyVal,
+            body: bodyVal,
         }
         $.post(signurl, (error, response, data) => {
             signres = JSON.parse(data)
