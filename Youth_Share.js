@@ -14,6 +14,8 @@ const URL = process.env.URL
 async function downFile () {
     let file = await download(URL, './')
     await fs.writeFileSync('./app.js',file, 'utf8')
+    let content = await fs.readFileSync('./app.js', 'utf8')
+    console.log(content)
 }
 
 async function start() {
