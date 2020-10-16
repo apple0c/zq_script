@@ -8,38 +8,20 @@ const rp = require('request-promise')
 const download = require('download')
 
 // 公共变量
+const URL = process.env.URL
 //const KEY = process.env.JD_COOKIE
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-    //await download(url, './app.js')
-    fs.writeFileSync('./app.js',await download(url))
+    fs.writeFileSync('./app.js',await download(URL))
 }
-
-async function changeFiele () {
-   let content = await fs.readFileSync('./app.js', 'utf8')
-   //content = content.replace(/var Key = ''/, `var Key = '${KEY}'`)
-   await fs.writeFileSync( './app.js', content, 'utf8')
-}
-
-
 
 async function start() {
-  /*if (!KEY) {
-    console.log('请填写 key 后在继续')
-    return
-  }*/
   // 下载最新代码
   await downFile();
   console.log('下载代码完毕')
-  // 替换变量
-  //await changeFiele();
-  //console.log('替换变量完毕')
   // 执行
   await exec("node app.js >> result.txt");
   console.log('执行完毕')
-
-  
     const path = "./result.txt";
     let content = "";
     if (fs.existsSync(path)) {
