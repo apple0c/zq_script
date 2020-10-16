@@ -8,23 +8,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
+    env:
+        YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
+        YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
+        YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
+        YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
     steps:
-      - name: Checkout codes
-        uses: actions/checkout@v2
-      - name: Use Node.js
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
-      - name: Run app
-        run: npm install
-      - name: '运行 【执行】'
-        run: node Youth_Share.js
-        env:
-          URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
-          YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
-          YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
-          YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
-          YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
+          node-version: 10.x
+      - name: npm install
+        if: env.YOUTH_HEADER
+        run: |
+          npm install
+      - name: '运行 【中青看点】'
+        if: env.YOUTH_HEADER
+        run: |
+          node Youth_Share.js
+      # node Youth_Share.js
+      # URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
       #- name: '运行 【中青看点分享】'
       #  run: node Youth_Share.js
       #  env:
