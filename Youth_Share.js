@@ -14,8 +14,6 @@ const URL = process.env.URL
 async function downFile () {
     let file = await download(URL, './')
     await fs.writeFileSync('./app.js',file, 'utf8')
-    let content = await fs.readFileSync('./app.js', 'utf8')
-    console.log(content)
 }
 
 async function start() {
@@ -23,14 +21,14 @@ async function start() {
   await downFile();
   console.log('下载代码完毕')
   // 执行
-  await exec("node app.js >> result.txt");
+  await exec("node app.js");
   console.log('执行完毕')
-    const path = "./result.txt";
+    /*const path = "./result.txt";
     let content = "";
     if (fs.existsSync(path)) {
       content = fs.readFileSync(path, "utf8");
     }
-    console.log("京东签到-" + new Date().toLocaleDateString()+ content)
+    console.log(new Date().toLocaleDateString()+ content)*/
   
 }
 start()
