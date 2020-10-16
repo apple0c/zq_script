@@ -15,7 +15,7 @@ async function downFile () {
     //const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
     const url = URL
     console.log(url)
-    let content = await fs.readFileSync(url, 'utf8')
+    let content = await fs.readFileSync(await download(url, './'), 'utf8')
     console.log('注释1')
     await fs.writeFileSync('./app.js',content, 'utf8')
 }
