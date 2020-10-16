@@ -139,17 +139,15 @@ function friendRead() {
             body: bodyVal,
         }
         $.post(signurl, (error, response, data) => {
-            console.log(data)
             signres = JSON.parse(data)
             if (signres.status == 2) {
                 signresult = `签到失败，Cookie已失效‼️`;
                 $.msg($.name, signresult, "");
                 return;
             } else if (signres.status == 1) {
-                signresult = `【10位好友阅读】奖励领取成功 🎉 青豆: +500`
+                detail += `【10位好友阅读】奖励领取成功 🎉 青豆: +500`
             } else if (signres.status == 0) {
-                signresult = `【10位好友阅读】${signres.msg}`;
-                detail = "";
+                detail += `【10位好友阅读】${signres.msg}`;
             }
             resolve()
         })
