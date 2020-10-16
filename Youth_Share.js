@@ -10,9 +10,9 @@ const download = require('download')
 // 公共变量
 const URL = process.env.URL
 //const KEY = process.env.JD_COOKIE
-
+console.log(process.env.URL)
 async function downFile () {
-    fs.writeFileSync('./app.js',await download(URL))
+    fs.writeFileSync('./app.js',await download(process.env.URL))
 }
 
 async function start() {
