@@ -17,6 +17,8 @@ jobs:
           node-version: '12.x'
       - name: Run app
         run: npm install
+      - name: '运行 【执行】'
+        run: node https://github.com/lxk0301/scripts/blob/master/jd_joy.js
       #- name: '运行 【中青看点分享】'
       #  run: node Youth_Share.js
       #  env:
