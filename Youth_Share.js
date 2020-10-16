@@ -48,3 +48,4 @@ async function start() {
     console.log("京东签到-" + new Date().toLocaleDateString()+ content)
   
 }
+start()
