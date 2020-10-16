@@ -10,7 +10,7 @@ async function downFile() {
     let file = await download(URL, './')
     await fs.writeFileSync('./app.js', file, 'utf8')
 }
-const workerProcess = child_process.exec('node app.js ' + i, function (error, stdout, stderr) {
+const workerProcess = child_process.exec('node app.js', function (error, stdout, stderr) {
     if (error) {
         console.log(error.stack);
         console.log('Error code: ' + error.code);
