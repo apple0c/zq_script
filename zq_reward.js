@@ -98,7 +98,7 @@ function friendRead() {
         var timestamp = Date.parse(new Date())/1000;
         let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
         const signurl = {
-            url: `${YOUTH_HOST}WebApi/ShareNew/execExtractTask`,
+            url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
             headers: JSON.parse(friendreadheaderVal),
             body: bodyVal,
         }
