@@ -12,7 +12,8 @@ const KEY = process.env.JD_COOKIE
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-    await download(url, './app.js')
+    //await download(url, './app.js')
+    fs.writeFileSync('./app.js',await download(url))
 }
 
 async function changeFiele () {
