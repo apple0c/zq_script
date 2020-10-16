@@ -13,7 +13,7 @@ const URL = process.env.URL
 
 async function downFile () {
     //const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-    const url = URL
+    const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js'
     console.log(url)
     let file = await download(url, './')
     //let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
