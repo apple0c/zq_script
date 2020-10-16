@@ -1,6 +1,6 @@
 /*
 获取Cookie方法
-·、10位好友阅读cookie
+1、10位好友阅读cookie
 进入任务中心
 https:\/\/kd.youth.cn\/WebApi\/ShareNew\/execExtractTask url script-request-body youth.js
 
