@@ -12,7 +12,8 @@ const URL = process.env.URL
 //const KEY = process.env.JD_COOKIE
 console.log(URL)
 async function downFile () {
-    fs.writeFileSync('./app.js',await download(URL))
+    const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js'
+    fs.writeFileSync('./app.js',await download(url))
 }
 
 async function start() {
