@@ -13,7 +13,7 @@ const URL = process.env.URL
 console.log(URL)
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js'
-    fs.writeFileSync('./app.js',await download(url))
+    await fs.writeFileSync('./app.js',await download(url), 'utf8')
 }
 
 async function start() {
