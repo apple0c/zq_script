@@ -66,7 +66,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
 
 !(async () => {
     if (!cookiesArr[0]) {
-        $.msg($.name, '【提示】请先获取中青看点一cookie')
+        $.msg($.name, '【提示】请先获取中青看点_奖励一cookie')
         return;
     }
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -75,7 +75,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
             friendreadheaderVal = friendreadArr[i];
             friendreadbodyVal = readArr[i];
             $.index = i + 1;
-            console.log(`-------------------------\n\n开始【中青看点${$.index}】`)
+            console.log(`-------------------------\n\n开始【中青看点_奖励${$.index}】`)
         }
         await signInfo();
         await friendRead();
@@ -119,10 +119,10 @@ function signInfo() {
         $.post(infourl, (error, response, data) => {
             signinfo = JSON.parse(data);
             if (signinfo.status == 1) {
-              cash = signinfo.data.user.money
+                cash = signinfo.data.user.money
                 subTitle = `【收益总计】${signinfo.data.user.score}青豆  现金约${cash}元`;
                 nick = `账号: ${signinfo.data.user.nickname}`;
-               detail +='\n<本次收益>：\n'
+                detail ='\n<本次收益>：\n'
             } else {
                 subTitle = `${signinfo.msg}`;
                 detail = ``;
