@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
+      YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
       YOUTH_FRIEND_READ_HEADER: ${{ secrets.YOUTH_FRIEND_READ_HEADER }}
       YOUTH_FRIEND_READ_BODY: ${{ secrets.YOUTH_FRIEND_READ_BODY }}
     steps:
