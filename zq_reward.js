@@ -95,13 +95,14 @@ function GetCookie() {
 function friendRead() {
     return new Promise((resolve, reject) => {
         var timestamp = Date.parse(new Date())/1000;
-        let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time='${timestamp}'`);
-        console.log(bodyVal)
+        let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
         const signurl = {
             url: `${YOUTH_HOST}WebApi/ShareNew/execExtractTask`,
             headers: JSON.parse(friendreadheaderVal),
             body: bodyVal,
         }
+        console.log(signurl)
+
         $.post(signurl, (error, response, data) => {
             signres = JSON.parse(data)
             if (signres.status == 2) {
