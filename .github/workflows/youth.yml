@@ -7,14 +7,15 @@ on:
   workflow_dispatch:
   schedule:
      - cron: '*/12 * * * *'
-  watch:
-    types: started
+  #watch:
+  #  types: started
 
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
+        URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
         YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
         YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
         YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
@@ -32,7 +33,7 @@ jobs:
       - name: '运行 【中青看点】'
         if: env.YOUTH_HEADER
         run: |
-          node Task/youth.js
+          node app.js
         env:
           YOUTH_NOTIFY_CONTROL: ${{ secrets.YOUTH_NOTIFY_CONTROL }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
