@@ -20,7 +20,7 @@ jobs:
       - name: '运行 【执行】'
         run: node Youth_Share.js
         env:
-          JD_COOKIE: ${{ secrets.YOUTH_READ }}
+          JD_COOKIE: sdfaqwerzd
       #- name: '运行 【中青看点分享】'
       #  run: node Youth_Share.js
       #  env:
