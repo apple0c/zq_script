@@ -11,15 +11,16 @@ const download = require('download')
 const KEY = process.env.JD_COOKIE
 
 async function downFile () {
-    // const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js'
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-    await download(url, './')
+    await download(url, './app.js')
 }
 
 async function changeFiele () {
-   let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
+   let content = await fs.readFileSync('./app.js', 'utf8')
    content = content.replace(/var Key = ''/, `var Key = '${KEY}'`)
-   await fs.writeFileSync( './JD_DailyBonus.js', content, 'utf8')
+  console.log("变量")
+   console.log(content)
+   await fs.writeFileSync( './app.js', content, 'utf8')
 }
 
 
@@ -36,7 +37,7 @@ async function start() {
   await changeFiele();
   console.log('替换变量完毕')
   // 执行
-  await exec("node JD_DailyBonus.js >> result.txt");
+  await exec("node app.js >> result.txt");
   console.log('执行完毕')
 
   
