@@ -31,27 +31,27 @@ jobs:
       - name: '运行 【中青看点自动阅读-文章】'
         if: env.YOUTH_READ1
         run: |
-          node app.js
+          node Task/Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ1 }}
 
       - name: '运行 【中青看点自动阅读-文章2】'
         if: env.YOUTH_READ2
         run: |
-          node app.js
+          node Task/Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ2 }}
           
       - name: '运行 【中青看点自动阅读-视频】'
         if: env.YOUTH_READ3
         run: |
-          node app.js
+          node Task/Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ3 }}
           
       - name: '运行 【中青看点自动阅读-视频2】'
         if: env.YOUTH_READ4
         run: |
-          node app.js
+          node Task/Youth_Read.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ4 }}
