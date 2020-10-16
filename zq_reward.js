@@ -10,8 +10,8 @@ const $ = new Env("中青看点_奖励")
 const YOUTH_HOST = "https://kd.youth.cn/WebApi/";
 const notify = $.isNode() ? require('./sendNotify') : '';
 let logs = $.getdata('zqlogs') || false, signresult;
-let cookiesArr = [], signheaderVal = '',
-    readArr = [], articlebodyVal = '',
+let cookiesArr = [], friendreadheaderVal = '',
+    readArr = [], friendreadbodyVal = '',
     timeArr = [], timebodyVal = '',
     redpArr = [], redpbodyVal = '';
 let CookieYouth = [], ARTBODYs = [],
@@ -82,12 +82,12 @@ if (isGetCookie = typeof $request !== 'undefined') {
 
 function GetCookie() {
     if ($request && $request.method != `OPTIONS` && $request.url.match(/\/WebApi\/ShareNew\/execExtractTask/)) {
-        const signheaderVal = JSON.stringify($request.headers)
-        const articlebodyVal = $request.body
-        if (articlebodyVal) $.setdata(articlebodyVal, 'youthbody_friendread_s')
-        if (signheaderVal) $.setdata(signheaderVal, 'youthheader_friendread_s')
-        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,signheaderVal: ${signheaderVal}`)
-        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,articlebodyVal: ${articlebodyVal}`)
+        const friendreadheaderVal = JSON.stringify($request.headers)
+        const friendreadbodyVal = $request.body
+        if (friendreadbodyVal) $.setdata(friendreadbodyVal, 'youthbody_friendread_s')
+        if (friendreadheaderVal) $.setdata(friendreadheaderVal, 'youthheader_friendread_s')
+        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,friendreadheaderVal: ${friendreadheaderVal}`)
+        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,friendreadbodyVal: ${friendreadbodyVal}`)
         $.msg($.name, `获取10位好友阅读Cookie: 成功🎉`, ``)
     }
 }
@@ -95,11 +95,10 @@ function GetCookie() {
 function friendRead() {
     return new Promise((resolve, reject) => {
         var timestamp = Date.parse(new Date())/1000;
-        let bodyVal = articlebodyVal.replace(/request_time=(d+)/, `request_time='${timestamp}'`);
-        console.log(bodyVal)
+        let bodyVal = friendreadbodyVal.replace(/request_time=(d+)/, `request_time='${timestamp}'`);
         const signurl = {
             url: `${YOUTH_HOST}WebApi/ShareNew/execExtractTask`,
-            headers: JSON.parse(signheaderVal),
+            headers: JSON.parse(friendreadheaderVal),
             body: bodyVal,
         }
         $.post(signurl, (error, response, data) => {
