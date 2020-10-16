@@ -1,4 +1,4 @@
-const exec = require('child_process').execSync
+const child_process = require('child_process')
 const fs = require('fs')
 const rp = require('request-promise')
 const download = require('download')
@@ -16,7 +16,7 @@ async function start() {
     await downFile();
     console.log('下载代码完毕')
     // 执行
-    await exec("node app.js");
+    await child_process.exec("node app.js");
     console.log('执行完毕')
 }
 start()
