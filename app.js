@@ -16,7 +16,14 @@ async function start() {
     await downFile();
     console.log('下载代码完毕')
     // 执行
-    await exec("node app.js");
+    await exec("node app.js >> result.txt");
     console.log('执行完毕')
+
+    const path = "./result.txt";
+    let content = "";
+    if (fs.existsSync(path)) {
+      content = fs.readFileSync(path, "utf8");
+    }
+    console.log(content)
 }
 start()
