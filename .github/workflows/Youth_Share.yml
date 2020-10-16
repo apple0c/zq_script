@@ -20,7 +20,7 @@ jobs:
       - name: '运行 【执行】'
         run: node Youth_Share.js
         env:
-          URL: 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js'
+          URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
           YOUTH_HEADER: 'sdfaqwerzd'
       #- name: '运行 【中青看点分享】'
       #  run: node Youth_Share.js
