@@ -1,22 +1,22 @@
 {
-  "name": "Sunert",
+  "name": "smiek",
   "version": "1.0.0",
   "description": "",
-  "main": "jingxi.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sunert/Scripts.git"
+    "url": "git+https://github.com/smiek/Actions.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Sunert/Scripts/issues"
+    "url": "https://github.com/smiek/Actions/issues"
   },
-  "homepage": "https://github.com/Sunert/Scripts#readme",
+  "homepage": "https://github.com/smiek/Actions#readme",
   "dependencies": {
     "crypto-js": "^4.0.0",
     "got": "^11.5.1",
