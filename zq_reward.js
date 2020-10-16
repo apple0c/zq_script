@@ -2,7 +2,8 @@
 获取Cookie方法
 ·、10位好友阅读cookie
 进入任务中心
-https:\/\/kd.youth.cn\/WebApi\/ShareNew\/execExtractTask
+https:\/\/kd.youth.cn\/WebApi\/ShareNew\/execExtractTask url script-request-body youth.js
+
 */
 
 let s = 200 //各数据接口延迟
