@@ -80,13 +80,17 @@ if (isGetCookie = typeof $request !== 'undefined') {
         await signInfo();
         await friendRead();
 
-        if ($.isNode() && $.time('HH') > 20 && $.time('HH') < 22) {
-            // await endCard();
+        if ($.isNode() && (($.time('HH') > 21 && $.time('HH') < 24)
+                || ($.time('HH') > 2 && $.time('HH') < 5)
+                || ($.time('HH') > 10 && $.time('HH') < 13))) {
+            await dailyTasks();
         }
-        else if ($.time('HH') > 4 && $.time('HH') < 8) {
-            // await endCard();
+        else if (($.time('HH') > 5 && $.time('HH') < 8)
+            || ($.time('HH') > 10 && $.time('HH') < 13)
+            || ($.time('HH') > 18 && $.time('HH') < 21)) {
+            await dailyTasks();
         }
-
+        
         await showmsg();
     }
 })()
@@ -118,7 +122,6 @@ function signInfo() {
               cash = signinfo.data.user.money
                 subTitle = `【收益总计】${signinfo.data.user.score}青豆  现金约${cash}元`;
                 nick = `账号: ${signinfo.data.user.nickname}`;
-                detail = `${signresult}(今天+${signinfo.data.sign_score}青豆) 已连签${signinfo.data.sign_day}天`;
                detail +='\n<本次收益>：\n'
             } else {
                 subTitle = `${signinfo.msg}`;
@@ -148,6 +151,31 @@ function friendRead() {
                 detail += `【10位好友阅读】奖励领取成功 🎉 青豆: +500`
             } else if (signres.status == 0) {
                 detail += `【10位好友阅读】${signres.msg}`;
+            }
+            resolve()
+        })
+    })
+}
+// 日常任务奖励
+function dailyTasks() {
+    return new Promise((resolve, reject) => {
+        var timestamp = Date.parse(new Date())/1000;
+        let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+        const signurl = {
+            url: 'https://kd.youth.cn/WebApi/Task/receiveBereadRed',
+            headers: JSON.parse(signheaderVal),
+        }
+        $.get(signurl, (error, response, data) => {
+            signres = JSON.parse(data)
+            console.log(signres)
+            if (signres.status == 0) {
+                signresult = `签到失败，Cookie已失效‼️`;
+                $.msg($.name, signresult, "");
+                return;
+            } else if (signres.status == 1) {
+                detail += `【日常任务奖励】奖励领取成功 🎉 青豆: +500`
+            } else if (signres.status == 0) {
+                detail += `【日常任务奖励】${signres.msg}`;
             }
             resolve()
         })
