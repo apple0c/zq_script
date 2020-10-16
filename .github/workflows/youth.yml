@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
         YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
         YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
         YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
