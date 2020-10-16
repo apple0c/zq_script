@@ -12,13 +12,7 @@ const URL = process.env.URL
 //const KEY = process.env.JD_COOKIE
 
 async function downFile () {
-    //const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-    const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js'
-    console.log(URL)
     let file = await download(URL, './')
-    //let content = await fs.readFileSync('./JD_DailyBonus.js', 'utf8')
-    //let content = await fs.readFileSync(await download(url, './'), 'utf8')
-    console.log(file)
     await fs.writeFileSync('./app.js',file, 'utf8')
 }
 
