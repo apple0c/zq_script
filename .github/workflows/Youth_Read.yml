@@ -14,6 +14,7 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     env:
       URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js"
+      RUNFILE: "Youth_Read.js"
       YOUTH_READ1: ${{ secrets.YOUTH_READ1 }}
       YOUTH_READ2: ${{ secrets.YOUTH_READ2 }}
       YOUTH_READ3: ${{ secrets.YOUTH_READ3 }}

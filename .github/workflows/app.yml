@@ -15,11 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
-        YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
-        YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
-        YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
-        YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
+      URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js"
+      RUNFILE: "youth.js"
+      YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
+      YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
+      YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
+      YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
@@ -33,5 +34,5 @@ jobs:
       - name: '运行 【中青看点】'
         if: env.YOUTH_HEADER
         run: |
-        #  node app.js
+          node app.js
           
