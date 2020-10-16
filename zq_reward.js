@@ -118,7 +118,11 @@ function signInfo() {
         }
         $.post(infourl, (error, response, data) => {
             signinfo = JSON.parse(data);
-            if (signinfo.status == 1) {
+            if (signinfo.status == 2) {
+                signresult = `签到失败，Cookie已失效‼️`;
+                $.msg($.name, signresult, "");
+                return;
+            } else if (signinfo.status == 1) {
                 cash = signinfo.data.user.money
                 subTitle = `【收益总计】${signinfo.data.user.score}青豆  现金约${cash}元`;
                 nick = `账号: ${signinfo.data.user.nickname}`;
