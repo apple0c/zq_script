@@ -80,24 +80,25 @@ if (isGetCookie = typeof $request !== 'undefined') {
         await signInfo();
         await friendRead();
         
+        let action = '';
         if($.isNode()){
             switch (parseInt($.time('HH'))) {
                 case 22:
                 case 23:
-                    shareReadVal = 'beread_extra_reward_one';
-                    await shareReadList();
+                    action = 'beread_extra_reward_one';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 3:
                 case 4:
-                    shareReadVal = 'beread_extra_reward_two';
-                    await shareReadList();
+                    action = 'beread_extra_reward_two';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 11:
                 case 12:
-                    shareReadVal = 'beread_extra_reward_three ';
-                    await shareReadList();
+                    action = 'beread_extra_reward_three ';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 default:
@@ -107,20 +108,20 @@ if (isGetCookie = typeof $request !== 'undefined') {
             switch (parseInt($.time('HH'))) {
                 case 6:
                 case 7:
-                    shareReadVal = 'beread_extra_reward_one';
-                    await shareReadList();
+                    action = 'beread_extra_reward_one';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 11:
                 case 12:
-                    shareReadVal = 'beread_extra_reward_two';
-                    await shareReadList();
+                    action = 'beread_extra_reward_two';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 19:
                 case 20:
-                    shareReadVal = 'beread_extra_reward_three';
-                    await shareReadList();
+                    action = 'beread_extra_reward_three';
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 default:
@@ -211,7 +212,7 @@ function friendRead() {
     })
 }
 //阅读分享
-function shareReadList() {
+function shareReadList(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
@@ -225,9 +226,9 @@ function shareReadList() {
             $.post(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
-                    shareReadActionId = signres.data.hot_article.id;
-                    console.log(shareReadActionId)
-                    await shareReadAction();
+                    let id = signres.data.hot_article.id;
+                    console.log(signres.data.hot_article.id)
+                    await sharereadaction(action,id);
                 } else if (signres.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
                 }
@@ -236,12 +237,12 @@ function shareReadList() {
         },s);
     })
 }
-function shareReadAction() {
+function sharereadaction(action,id) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
             let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-            bodyVal = bodyVal.replace(/action=\w+/, `article_id=${shareReadActionId}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `article_id=${id}`);
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/getShareArticleReward',
                 headers: JSON.parse(friendreadheaderVal),
@@ -251,7 +252,7 @@ function shareReadAction() {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
                     detail += `【分享文章】+${signres.data.score}个青豆\n`
-                    await shareRead();
+                    await shareread(action);
                 } else if (signres.status == 0) {
                     detail += `【分享文章】 ${signres.msg}\n`;
                 }
@@ -260,12 +261,12 @@ function shareReadAction() {
         },s);
     })
 }
-function shareRead() {
+function shareread(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
             let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-            bodyVal = bodyVal.replace(/action=\w+/, `action=${shareReadVal}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `action=${action}`);
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
                 headers: JSON.parse(friendreadheaderVal),
@@ -274,11 +275,11 @@ function shareRead() {
             $.post(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 let title = ''
-                if(shareReadVal == 'beread_extra_reward_one'){
+                if(action == 'beread_extra_reward_one'){
                     title = '清晨分享'
-                }else if(shareReadVal == 'beread_extra_reward_two'){
+                }else if(action == 'beread_extra_reward_two'){
                     title = '午间分享'
-                }else if(shareReadVal == 'beread_extra_reward_three'){
+                }else if(action == 'beread_extra_reward_three'){
                     title = '晚间分享'
                 }
                 if (signres.status == 1) {
