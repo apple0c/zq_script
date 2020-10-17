@@ -226,7 +226,10 @@ function shareReadList(action) {
             $.post(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
-                    await shareReadAction(action,signres.data.hot_article.id);
+                    await shareReadAction();
+                    let id = signres.data.hot_article.id;
+                    console.log(signres.data.hot_article.id)
+                    await shareReadAction(action,id);
                 } else if (signres.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
                 }
