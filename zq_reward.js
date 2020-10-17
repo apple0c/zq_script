@@ -79,8 +79,64 @@ if (isGetCookie = typeof $request !== 'undefined') {
         }
         await signInfo();
         await friendRead();
-
-        if ($.isNode() && (($.time('HH') > 21 && $.time('HH') < 24)
+        switch (key) {
+            case value: 
+                
+                break;
+        
+            default:
+                break;
+        }
+        let time = $.time('HH');
+        let action = '';
+        if($.isNode()){
+            switch (time) {
+                case 22:
+                case 23:
+                    action = 'beread_extra_reward_one';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                case 3:
+                case 4:
+                    action = 'beread_extra_reward_two';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                case 11:
+                case 12:
+                    action = 'beread_extra_reward_three ';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            switch (time) {
+                case 6:
+                case 7:
+                    action = 'beread_extra_reward_one';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                case 11:
+                case 12:
+                    action = 'beread_extra_reward_two';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                case 19:
+                case 20:
+                    action = 'beread_extra_reward_three';
+                    await shareRead(action);
+                    await dailyTasks();
+                    break;
+                default:
+                    break;
+            }
+        }
+        /*if ($.isNode() && (($.time('HH') > 21 && $.time('HH') < 24)
                 || ($.time('HH') > 2 && $.time('HH') < 5)
                 || ($.time('HH') > 10 && $.time('HH') < 13))) {
             await dailyTasks();
@@ -89,7 +145,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
             || ($.time('HH') > 10 && $.time('HH') < 13)
             || ($.time('HH') > 18 && $.time('HH') < 21)) {
             await dailyTasks();
-        }
+        }*/
         
         await showmsg();
     }
@@ -141,12 +197,13 @@ function friendRead() {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
             let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-            const signurl = {
+            bodyVal = bodyVal.replace(/action=\w+/, `action=beread_extra_reward_plus_wub`);
+            const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
                 headers: JSON.parse(friendreadheaderVal),
                 body: bodyVal,
             }
-            $.post(signurl, (error, response, data) => {
+            $.post(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 2) {
                     signresult = `签到失败，Cookie已失效‼️`;
@@ -162,15 +219,47 @@ function friendRead() {
         },s);
     })
 }
+//阅读分享
+function shareRead(action) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `action=${action}`);
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
+                headers: JSON.parse(friendreadheaderVal),
+                body: bodyVal,
+            }
+            $.post(url, (error, response, data) => {
+                signres = JSON.parse(data)
+                let title = ''
+                if(action == 'beread_extra_reward_one'){
+                    title = '清晨分享'
+                }else if(action == 'beread_extra_reward_two'){
+                    title = '午间分享'
+                }else if(action == 'beread_extra_reward_three'){
+                    title = '晚间分享'
+                }
+                if (signres.status == 1) {
+                    detail += `【${title}】奖励领取成功 🎉 青豆: +200\n`
+                } else if (signres.status == 0) {
+                    detail += `【${title}】${signres.msg}\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
 // 每日时段红包
 function dailyTasks() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            const signurl = {
+            const url = {
                 url: 'https://kd.youth.cn/WebApi/Task/receiveBereadRed',
                 headers: JSON.parse(signheaderVal),
             }
-            $.get(signurl, (error, response, data) => {
+            $.get(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 console.log(signres)
                 if(signres.code == 1) {
