@@ -82,16 +82,16 @@ if (isGetCookie = typeof $request !== 'undefined') {
         
         let action = '';
         if($.isNode()){
-            console.log($.time('HH'))
-            switch ($.time('HH')) {
+            console.log(parseInt($.time('HH')))
+            switch (parseInt($.time('HH'))) {
                 case 22:
                 case 23:
                     action = 'beread_extra_reward_one';
                     await shareRead(action);
                     await dailyTasks();
                     break;
-                case 03:
-                case 04:
+                case 3:
+                case 4:
                     action = 'beread_extra_reward_two';
                     await shareRead(action);
                     await dailyTasks();
@@ -106,7 +106,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     break;
             }
         }else{
-            switch ($.time('HH')) {
+            switch (parseInt($.time('HH'))) {
                 case 6:
                 case 7:
                     action = 'beread_extra_reward_one';
