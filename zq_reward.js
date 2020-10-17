@@ -223,7 +223,7 @@ function shareReadList(action) {
                 headers: JSON.parse(friendreadheaderVal),
                 body: bodyVal,
             }
-            $.post(url, (error, response, data) => {
+            $.post(url, async(error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
                     let id = signres.data.hot_article.id;
@@ -248,7 +248,7 @@ function sharereadaction(action,id) {
                 headers: JSON.parse(friendreadheaderVal),
                 body: bodyVal,
             }
-            $.post(url, (error, response, data) => {
+            $.post(url, async(error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
                     detail += `【分享文章】+${signres.data.score}个青豆\n`
