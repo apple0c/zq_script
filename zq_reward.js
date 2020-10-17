@@ -281,6 +281,8 @@ function shareRead(action) {
                 }else if(action == 'beread_extra_reward_three'){
                     title = '晚间分享'
                 }
+                console.log(actionA)
+                console.log(title)
                 if (signres.status == 1) {
                     detail += `【${title}】+200个青豆\n`
                 } else if (signres.status == 0) {
