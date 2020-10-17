@@ -90,8 +90,8 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     await shareRead(action);
                     await dailyTasks();
                     break;
-                case 3:
-                case 4:
+                case 03:
+                case 04:
                     action = 'beread_extra_reward_two';
                     await shareRead(action);
                     await dailyTasks();
