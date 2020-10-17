@@ -83,6 +83,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
         let time = $.time('HH');
         let action = '';
         if($.isNode()){
+            console.log(time)
             switch (time) {
                 case 22:
                 case 23:
