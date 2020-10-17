@@ -80,11 +80,10 @@ if (isGetCookie = typeof $request !== 'undefined') {
         await signInfo();
         await friendRead();
         
-        let time = $.time('HH');
         let action = '';
         if($.isNode()){
-            console.log(time)
-            switch (time) {
+            console.log($.time('HH'))
+            switch ($.time('HH')) {
                 case 22:
                 case 23:
                     action = 'beread_extra_reward_one';
@@ -107,7 +106,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     break;
             }
         }else{
-            switch (time) {
+            switch ($.time('HH')) {
                 case 06:
                 case 07:
                     action = 'beread_extra_reward_one';
