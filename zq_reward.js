@@ -251,7 +251,7 @@ function shareRead(action) {
         },s);
     })
 }
-// 每日时段红包
+// 每日时段红包s
 function dailyTasks() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
