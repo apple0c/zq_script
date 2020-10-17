@@ -91,7 +91,6 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     break;
                 case 3:
                 case 4:
-                case 5:
                     action = 'beread_extra_reward_two';
                     await shareReadList(action);
                     await dailyTasks();
@@ -228,8 +227,7 @@ function shareReadList(action) {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
                     let id = signres.data.hot_article.id;
-                    console.log(signres.data.hot_article.id)
-                    await sharereadaction(action,id);
+                    await shareReadAction(action,id);
                 } else if (signres.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
                 }
@@ -238,7 +236,7 @@ function shareReadList(action) {
         },s);
     })
 }
-function sharereadaction(action,id) {
+function shareReadAction(action,id) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
@@ -253,7 +251,7 @@ function sharereadaction(action,id) {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
                     detail += `【分享文章】+${signres.data.score}个青豆\n`
-                    await shareread(action);
+                    await shareRead(action);
                 } else if (signres.status == 0) {
                     detail += `【分享文章】 ${signres.msg}\n`;
                 }
@@ -262,7 +260,7 @@ function sharereadaction(action,id) {
         },s);
     })
 }
-function shareread(action) {
+function shareRead(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
@@ -303,7 +301,6 @@ function dailyTasks() {
             }
             $.get(url, (error, response, data) => {
                 signres = JSON.parse(data)
-                console.log(signres)
                 if(signres.code == 1) {
                     detail += `【每日时段红包】+${signres.data.score}个青豆\n`
                 }else{
