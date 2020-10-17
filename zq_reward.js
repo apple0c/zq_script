@@ -79,14 +79,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
         }
         await signInfo();
         await friendRead();
-        switch (key) {
-            case value: 
-                
-                break;
         
-            default:
-                break;
-        }
         let time = $.time('HH');
         let action = '';
         if($.isNode()){
