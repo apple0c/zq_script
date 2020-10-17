@@ -226,7 +226,6 @@ function shareReadList(action) {
             $.post(url, (error, response, data) => {
                 signres = JSON.parse(data)
                 if (signres.status == 1) {
-                    await shareReadAction();
                     let id = signres.data.hot_article.id;
                     console.log(signres.data.hot_article.id)
                     await shareReadAction(action,id);
