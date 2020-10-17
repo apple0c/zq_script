@@ -82,24 +82,23 @@ if (isGetCookie = typeof $request !== 'undefined') {
         
         let action = '';
         if($.isNode()){
-            console.log(parseInt($.time('HH')))
             switch (parseInt($.time('HH'))) {
                 case 22:
                 case 23:
                     action = 'beread_extra_reward_one';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 3:
                 case 4:
                     action = 'beread_extra_reward_two';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 11:
                 case 12:
                     action = 'beread_extra_reward_three ';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 default:
@@ -110,19 +109,19 @@ if (isGetCookie = typeof $request !== 'undefined') {
                 case 6:
                 case 7:
                     action = 'beread_extra_reward_one';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 11:
                 case 12:
                     action = 'beread_extra_reward_two';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 case 19:
                 case 20:
                     action = 'beread_extra_reward_three';
-                    await shareRead(action);
+                    await shareReadList(action);
                     await dailyTasks();
                     break;
                 default:
@@ -203,7 +202,7 @@ function friendRead() {
                     $.msg($.name, signresult, "");
                     return;
                 } else if (signres.status == 1) {
-                    detail += `【10位好友阅读】奖励领取成功 🎉 青豆: +500\n`
+                    detail += `【10位好友阅读】+500个青豆\n`
                 } else if (signres.status == 0) {
                     detail += `【10位好友阅读】${signres.msg}\n`;
                 }
@@ -213,6 +212,53 @@ function friendRead() {
     })
 }
 //阅读分享
+function shareReadList(action) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            bodyVal = bodyVal.replace(/action=\w+/, ``);
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/bereadExtraList',
+                headers: JSON.parse(friendreadheaderVal),
+                body: bodyVal,
+            }
+            $.post(url, (error, response, data) => {
+                signres = JSON.parse(data)
+                if (signres.status == 1) {
+                    await shareReadAction(action,signres.data.hot_article.id);
+                } else if (signres.status == 0) {
+                    detail += `【阅读分享】获取信息失败\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
+function shareReadAction(action,id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `article_id=${id}`);
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/getShareArticleReward',
+                headers: JSON.parse(friendreadheaderVal),
+                body: bodyVal,
+            }
+            $.post(url, (error, response, data) => {
+                signres = JSON.parse(data)
+                if (signres.status == 1) {
+                    detail += `【分享文章】+${signres.data.score}个青豆\n`
+                    await shareRead(action);
+                } else if (signres.status == 0) {
+                    detail += `【分享文章】 ${signres.msg}\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
 function shareRead(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -235,7 +281,7 @@ function shareRead(action) {
                     title = '晚间分享'
                 }
                 if (signres.status == 1) {
-                    detail += `【${title}】奖励领取成功 🎉 青豆: +200\n`
+                    detail += `【${title}】+200个青豆\n`
                 } else if (signres.status == 0) {
                     detail += `【${title}】${signres.msg}\n`;
                 }
@@ -256,7 +302,7 @@ function dailyTasks() {
                 signres = JSON.parse(data)
                 console.log(signres)
                 if(signres.code == 1) {
-                    detail += `【每日时段红包】奖励领取成功 🎉 青豆: +${signres.data.score}\n`
+                    detail += `【每日时段红包】+${signres.data.score}个青豆\n`
                 }else{
 
                 }
