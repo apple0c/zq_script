@@ -69,7 +69,7 @@ if (typeof $request !== 'undefined') {
 }
 
 !(async () => {
-    if (!shareArr) {
+    if (!shareArr[0]) {
         $.msg($.name, '【提示】请先获取中青看点 转发分享cookie')
         return;
     }
