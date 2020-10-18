@@ -6,7 +6,8 @@ name: youth
 on:
   workflow_dispatch:
   schedule:
-     - cron: '*/12 * * * *'
+    # - cron: '*/2 16,21-23,0-1 * * *'
+     - cron: '*/2 0-4 * * *'
   #watch:
   #  types: started
 
@@ -23,10 +24,10 @@ jobs:
       YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 14.x
       - name: npm install
         if: env.YOUTH_HEADER
         run: |
