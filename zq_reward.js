@@ -1,36 +1,40 @@
 /*
-获取Cookie方法
-1、10位好友阅读cookie
-进入任务中心
+中青看点 转发分享奖励
+从 github @Sunert改写而来 https://raw.githubusercontent.com/Sunert/Scripts/master/Task/youth.js
+
+
+自用
+
+https:\/\/kd.youth.cn\/WebApi\/ShareNew\/bereadExtraList url script-request-body https://raw.githubusercontent.com/smiek/Actions/master/zq_reward.js
+
 https:\/\/kd.youth.cn\/WebApi\/ShareNew\/execExtractTask url script-request-body https://raw.githubusercontent.com/smiek/Actions/master/zq_reward.js
 
 */
 
 let s = 200 //各数据接口延迟
-const $ = new Env("中青看点_奖励")
-const YOUTH_HOST = "https://kd.youth.cn/WebApi/";
+const $ = new Env("中青看点")
 const notify = $.isNode() ? require('./sendNotify') : '';
 let logs = $.getdata('zqlogs') || false, signresult;
 let cookiesArr = [], signheaderVal = '',
-    friendreadArr = [], friendreadheaderVal = '',
-    readArr = [], friendreadbodyVal = '';
+    shareArr = [], shareheaderVal = '',
+    readArr = [], sharebodyVal = '';
 let CookieYouth = [], ARTBODYs = [],
-    FriendReadYouth = [];
+    ShareYouth = [];
 if ($.isNode()) {
     if (process.env.YOUTH_HEADER && process.env.YOUTH_HEADER.indexOf('#') > -1) {
         CookieYouth = process.env.YOUTH_HEADER.split('#');
     } else {
         CookieYouth = process.env.YOUTH_HEADER.split()
     };
-    if (process.env.YOUTH_FRIEND_READ_HEADER && process.env.YOUTH_FRIEND_READ_HEADER.indexOf('#') > -1) {
-        FriendReadYouth = process.env.YOUTH_FRIEND_READ_HEADER.split('#');
+    if (process.env.YOUTH_SHARE_HEADER && process.env.YOUTH_SHARE_HEADER.indexOf('#') > -1) {
+        ShareYouth = process.env.YOUTH_SHARE_HEADER.split('#');
     } else {
-        FriendReadYouth = process.env.YOUTH_FRIEND_READ_HEADER.split()
+        ShareYouth = process.env.YOUTH_SHARE_HEADER.split()
     };
-    if (process.env.YOUTH_FRIEND_READ_BODY && process.env.YOUTH_FRIEND_READ_BODY.indexOf('#') > -1) {
-        ARTBODYs = process.env.YOUTH_FRIEND_READ_BODY.split('#');
+    if (process.env.YOUTH_SHARE_BODY && process.env.YOUTH_SHARE_BODY.indexOf('#') > -1) {
+        ARTBODYs = process.env.YOUTH_SHARE_BODY.split('#');
     } else {
-        ARTBODYs = process.env.YOUTH_FRIEND_READ_BODY.split()
+        ARTBODYs = process.env.YOUTH_SHARE_BODY.split()
     };
 }
 
@@ -40,9 +44,9 @@ if ($.isNode()) {
           cookiesArr.push(CookieYouth[item])
         }
       })
-    Object.keys(FriendReadYouth).forEach((item) => {
-        if (FriendReadYouth[item]) {
-            friendreadArr.push(FriendReadYouth[item])
+    Object.keys(ShareYouth).forEach((item) => {
+        if (ShareYouth[item]) {
+            shareArr.push(ShareYouth[item])
         }
     })
     Object.keys(ARTBODYs).forEach((item) => {
@@ -50,35 +54,34 @@ if ($.isNode()) {
             readArr.push(ARTBODYs[item])
         }
     })
-    console.log(`============ 共${cookiesArr.length}个中青账号  =============\n`)
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
 } else {
     cookiesArr.push($.getdata('youthheader_zq'));
-    friendreadArr.push($.getdata('youthheader_friendread_s'));
-    readArr.push($.getdata('youthbody_friendread_s'));
+    shareArr.push($.getdata('youthheader_share_sm'));
+    readArr.push($.getdata('youthbody_share_sm'));
 }
 
-if (isGetCookie = typeof $request !== 'undefined') {
+if (typeof $request !== 'undefined') {
     GetCookie();
     $.done()
+    return;
 }
 
 !(async () => {
-    if (!cookiesArr[0]) {
-        $.msg($.name, '【提示】请先获取中青看点_奖励一cookie')
+    if (!shareArr) {
+        $.msg($.name, '【提示】请先获取中青看点 转发分享cookie')
         return;
     }
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             signheaderVal = cookiesArr[i];
-            friendreadheaderVal = friendreadArr[i];
-            friendreadbodyVal = readArr[i];
+            shareheaderVal = shareArr[i];
+            sharebodyVal = readArr[i];
             $.index = i + 1;
-            console.log(`-------------------------\n\n开始【中青看点_奖励${$.index}】`)
         }
         await signInfo();
-        await friendRead();
+        // await friendRead();
         
         let action = '';
         if($.isNode()){
@@ -86,20 +89,19 @@ if (isGetCookie = typeof $request !== 'undefined') {
                 case 22:
                 case 23:
                     action = 'beread_extra_reward_one';
-                    await shareReadList(action);
+                    await shareList(action);
                     await dailyTasks();
-                    await showmsg();
                     break;
                 case 3:
                 case 4:
                     action = 'beread_extra_reward_two';
-                    await shareReadList(action);
+                    await shareList(action);
                     await dailyTasks();
                     break;
                 case 11:
                 case 12:
                     action = 'beread_extra_reward_three ';
-                    await shareReadList(action);
+                    await shareList(action);
                     await dailyTasks();
                     break;
                 default:
@@ -110,36 +112,28 @@ if (isGetCookie = typeof $request !== 'undefined') {
                 case 6:
                 case 7:
                     action = 'beread_extra_reward_one';
-                    await shareReadList(action);
+                    await shareList1();
                     await dailyTasks();
-                    await showmsg();
                     break;
                 case 11:
                 case 12:
                     action = 'beread_extra_reward_two';
-                    await shareReadList(action);
+                    await shareList1();
                     await dailyTasks();
                     break;
                 case 19:
                 case 20:
                     action = 'beread_extra_reward_three';
-                    await shareReadList(action);
+                    await shareList1();
                     await dailyTasks();
                     break;
                 default:
+                    await shareList1();
                     break;
             }
         }
-        /*if ($.isNode() && (($.time('HH') > 21 && $.time('HH') < 24)
-                || ($.time('HH') > 2 && $.time('HH') < 5)
-                || ($.time('HH') > 10 && $.time('HH') < 13))) {
-            await dailyTasks();
-        }
-        else if (($.time('HH') > 5 && $.time('HH') < 8)
-            || ($.time('HH') > 10 && $.time('HH') < 13)
-            || ($.time('HH') > 18 && $.time('HH') < 21)) {
-            await dailyTasks();
-        }*/
+        
+        await showmsg();
         
     }
 })()
@@ -148,14 +142,14 @@ if (isGetCookie = typeof $request !== 'undefined') {
 
 
 function GetCookie() {
-    if ($request && $request.method != `OPTIONS` && $request.url.match(/\/WebApi\/ShareNew\/execExtractTask/)) {
-        const friendreadheaderVal = JSON.stringify($request.headers)
-        const friendreadbodyVal = $request.body
-        if (friendreadbodyVal) $.setdata(friendreadbodyVal, 'youthbody_friendread_s')
-        if (friendreadheaderVal) $.setdata(friendreadheaderVal, 'youthheader_friendread_s')
-        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,friendreadheaderVal: ${friendreadheaderVal}`)
-        $.log(`${$.name} 获取10位好友阅读Cookie: 成功,friendreadbodyVal: ${friendreadbodyVal}`)
-        $.msg($.name, `获取10位好友阅读Cookie: 成功🎉`, ``)
+    if ($request && $request.method != `OPTIONS` && $request.url.match(/\/WebApi\/ShareNew\/bereadExtraList/)) {
+        const shareheaderVal = JSON.stringify($request.headers)
+        const sharebodyVal = $request.body
+        if (sharebodyVal) $.setdata(sharebodyVal, 'youthbody_share_sm')
+        if (shareheaderVal) $.setdata(shareheaderVal, 'youthheader_share_sm')
+        $.log(`${$.name} 获取转发分享Cookie: 成功,shareheaderVal: ${shareheaderVal}`)
+        $.log(`${$.name} 获取转发分享Cookie: 成功,sharebodyVal: ${sharebodyVal}`)
+        $.msg($.name, `获取转发分享Cookie: 成功🎉`, ``)
     }
 }
 
@@ -175,7 +169,7 @@ function signInfo() {
                 cash = signinfo.data.user.money
                 subTitle = `【收益总计】${signinfo.data.user.score}青豆  现金约${cash}元`;
                 nick = `账号: ${signinfo.data.user.nickname}`;
-                detail ='\n<本次收益>：\n'
+                detail ='<本次收益>：\n'
             } else {
                 subTitle = `${signinfo.msg}`;
                 detail = ``;
@@ -184,58 +178,121 @@ function signInfo() {
         })
     })
 }
-//10位好友阅读
-function friendRead() {
+// 修改请求参数中的时间
+function editshareBody() {
+    var timestamp = Date.parse(new Date())/1000;
+    let val = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+    return val;
+}
+//分享转发
+function shareList1() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            var timestamp = Date.parse(new Date())/1000;
-            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-            bodyVal = bodyVal.replace(/action=\w+/, `action=beread_extra_reward_plus_wub`);
+            let bodyVal = editshareBody()
             const url = {
-                url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
-                headers: JSON.parse(friendreadheaderVal),
+                url: 'https://kd.youth.cn/WebApi/ShareNew/bereadExtraList',
+                headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
-            $.post(url, (error, response, data) => {
-                signres = JSON.parse(data)
-                if (signres.status == 2) {
-                    signresult = `签到失败，Cookie已失效‼️`;
-                    $.msg($.name, signresult, "");
-                    return;
-                } else if (signres.status == 1) {
-                    detail += `【10位好友阅读】+500个青豆\n`
-                } else if (signres.status == 0) {
-                    detail += `【10位好友阅读】${signres.msg}\n`;
+            $.post(url, async(error, response, data) => {
+                res = JSON.parse(data)
+                if (res.status == 1) {
+                    res.data.taskList.forEach(element => {
+                        if(element.name == '连续转发奖励') return;
+                        if(element.status == 1 && (
+                            element.name == '清晨分享' ||
+                            element.name == '午间分享' ||
+                            element.name == '晚间分享' ||
+                            element.name == '被10位好友阅读'
+                        )){
+                            let score = element.score - element.norm_money;
+                            shareRead1(element.name,element.action,score);
+                        }
+                    });
+                } else if (res.status == 0) {
+                    detail += `【阅读分享】获取信息失败\n`;
                 }
                 resolve()
             })
         },s);
     })
 }
+function shareRead1(title,action,score) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let bodyVal = editshareBody()
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
+                headers: JSON.parse(shareheaderVal),
+                body: `${bodyVal}&action=${action}`,
+            }
+            $.post(url, (error, response, data) => {
+                res = JSON.parse(data)
+                console.log(action)
+                console.log(title)
+                if (res.status == 1) {
+                    detail += `【${title}】+${score}个青豆\n`
+                } else if (res.status == 0) {
+                    detail += `【${title}】${res.msg}\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
+//--------------------------------------------------------
 //阅读分享
-function shareReadList(action) {
+function shareList(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
-            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
             bodyVal = bodyVal.replace(/action=\w+/, ``);
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/bereadExtraList',
-                headers: JSON.parse(friendreadheaderVal),
+                headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
             $.post(url, async(error, response, data) => {
-                signres = JSON.parse(data)
-                if (signres.status == 1) {
+                res = JSON.parse(data)
+                if (res.status == 1) {
                     let id = '';
-                    if(signres.data.hot_article){
-                        id = signres.data.hot_article.id;
+                    if(res.data.hot_article){
+                        id = res.data.hot_article.id;
                         await shareReadAction(action,id);
                     }else{
                         await shareRead(action);
                     }
-                } else if (signres.status == 0) {
+                } else if (res.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
+//10位好友阅读
+function friendRead() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `action=beread_extra_reward_plus_wub`);
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
+                headers: JSON.parse(shareheaderVal),
+                body: bodyVal,
+            }
+            $.post(url, (error, response, data) => {
+                res = JSON.parse(data)
+                if (res.status == 2) {
+                    signresult = `签到失败，Cookie已失效‼️`;
+                    $.msg($.name, signresult, "");
+                    return;
+                } else if (res.status == 1) {
+                    detail += `【10位好友阅读】+500个青豆\n`
+                } else if (res.status == 0) {
+                    detail += `【10位好友阅读】${resmsg}\n`;
                 }
                 resolve()
             })
@@ -246,20 +303,20 @@ function shareReadAction(action,id) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
-            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
             bodyVal = bodyVal.replace(/action=\w+/, `article_id=${id}`);
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/getShareArticleReward',
-                headers: JSON.parse(friendreadheaderVal),
+                headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
             $.post(url, async(error, response, data) => {
-                signres = JSON.parse(data)
-                if (signres.status == 1) {
-                    detail += `【分享文章】+${signres.data.score}个青豆\n`
+                res = JSON.parse(data)
+                if (res.status == 1) {
+                    detail += `【分享文章】+${res.data.score}个青豆\n`
                     await shareRead(action);
-                } else if (signres.status == 0) {
-                    detail += `【分享文章】 ${signres.msg}\n`;
+                } else if (res.status == 0) {
+                    detail += `【分享文章】 ${res.msg}\n`;
                 }
                 resolve()
             })
@@ -270,15 +327,15 @@ function shareRead(action) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             var timestamp = Date.parse(new Date())/1000;
-            let bodyVal = friendreadbodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
             bodyVal = bodyVal.replace(/action=\w+/, `action=${action}`);
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/execExtractTask',
-                headers: JSON.parse(friendreadheaderVal),
+                headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
             $.post(url, (error, response, data) => {
-                signres = JSON.parse(data)
+                res = JSON.parse(data)
                 let title = ''
                 if(action == 'beread_extra_reward_one'){
                     title = '清晨分享'
@@ -289,10 +346,10 @@ function shareRead(action) {
                 }
                 console.log(action)
                 console.log(title)
-                if (signres.status == 1) {
+                if (res.status == 1) {
                     detail += `【${title}】+200个青豆\n`
-                } else if (signres.status == 0) {
-                    detail += `【${title}】${signres.msg}\n`;
+                } else if (res.status == 0) {
+                    detail += `【${title}】${res.msg}\n`;
                 }
                 resolve()
             })
@@ -308,9 +365,9 @@ function dailyTasks() {
                 headers: JSON.parse(signheaderVal),
             }
             $.get(url, (error, response, data) => {
-                signres = JSON.parse(data)
-                if(signres.code == 1) {
-                    detail += `【每日时段红包】+${signres.data.score}个青豆\n`
+                res = JSON.parse(data)
+                if(res.code == 1) {
+                    detail += `【每日时段红包】+${res.data.score}个青豆\n`
                 }else{
 
                 }
