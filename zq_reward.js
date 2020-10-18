@@ -197,24 +197,27 @@ function shareList1() {
             $.post(url, async(error, response, data) => {
                 res = JSON.parse(data)
                 if (res.status == 1) {
-                    res.data.taskList.forEach(element => {
-                        if(element.name == '连续转发奖励') return;
-                        if(element.status == 0 && (
-                            element.name == '清晨分享' ||
-                            element.name == '午间分享' ||
-                            element.name == '晚间分享' ||
-                            element.name == '被10位好友阅读'
-                        )){
-                            let shareBool = true;
-                            if(element.hot_article){
-                                shareReadAction1(element.hot_article.id).then(() => shareBool = false);
-                            }
-                            if(shareBool){
+                    try {
+                        res.data.taskList.forEach(element => {
+                            if(element.name == '连续转发奖励') return;
+                            if(element.name == '被10位好友阅读' && element.name == '被10位好友阅读'){
                                 let score = element.score - element.norm_money;
-                                shareRead1(element.name,element.action,score);
+                                shareRead1(element.name,element.action,score)
+                            }else 
+                            if(element.status == 0 && (
+                                element.name == '清晨分享' ||
+                                element.name == '午间分享' ||
+                                element.name == '晚间分享'
+                            ) && element.hot_article){
+                                let score = element.score - element.norm_money;
+                                shareReadAction1(element.hot_article.id).then(() => shareRead1(element.name,element.action,score));
+                                throw new Error("EndIterative");
                             }
-                        }
-                    });
+                        });
+                } catch(e) {
+                    
+                };
+
                 } else if (res.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
                 }
@@ -236,11 +239,12 @@ function shareReadAction1(id) {
                 res = JSON.parse(data)
                 if (res.status == 1) {
                     detail += `【分享文章】+${res.data.score}个青豆\n`;
+                    resolve()
                 } else if (res.status == 0) {
                     detail += `【分享文章】 ${res.msg}\n`;
+                    resolve()
                 }else{
                     detail += `【分享文章】 执行失败\n`;
-                    resolve()
                 }
             })
         },s);
