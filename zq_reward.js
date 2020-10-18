@@ -65,7 +65,6 @@ if ($.isNode()) {
 
 if (typeof $request !== 'undefined') {
     GetCookie();
-    $.done()
     return;
 }
 
