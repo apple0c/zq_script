@@ -20,10 +20,10 @@ jobs:
       YOUTH_FRIEND_READ_BODY: ${{ secrets.YOUTH_FRIEND_READ_BODY }}
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 14.x
       - name: npm install
         if: env.YOUTH_FRIEND_READ_HEADER
         run: |
