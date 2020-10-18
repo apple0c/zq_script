@@ -206,11 +206,36 @@ function shareList1() {
                             element.name == '被10位好友阅读'
                         )){
                             let score = element.score - element.norm_money;
-                            shareRead1(element.name,element.action,score);
+                            let aa = shareRead1(element.name,element.action,score);
+                            console.log(aa)
                         }
                     });
                 } else if (res.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
+                }
+                resolve()
+            })
+        },s);
+    })
+}
+function shareReadAction1(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var timestamp = Date.parse(new Date())/1000;
+            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
+            bodyVal = bodyVal.replace(/action=\w+/, `article_id=${id}`);
+            const url = {
+                url: 'https://kd.youth.cn/WebApi/ShareNew/getShareArticleReward',
+                headers: JSON.parse(shareheaderVal),
+                body: bodyVal,
+            }
+            $.post(url, async(error, response, data) => {
+                res = JSON.parse(data)
+                if (res.status == 1) {
+                    detail += `【分享文章】+${res.data.score}个青豆\n`
+                    return true;
+                } else if (res.status == 0) {
+                    detail += `【分享文章】 ${res.msg}\n`;
                 }
                 resolve()
             })
