@@ -199,15 +199,20 @@ function shareList1() {
                 if (res.status == 1) {
                     res.data.taskList.forEach(element => {
                         if(element.name == '连续转发奖励') return;
-                        if(element.status == 1 && (
+                        if(element.status == 0 && (
                             element.name == '清晨分享' ||
                             element.name == '午间分享' ||
                             element.name == '晚间分享' ||
                             element.name == '被10位好友阅读'
                         )){
-                            let score = element.score - element.norm_money;
-                            let aa = shareRead1(element.name,element.action,score);
-                            console.log(aa)
+                            let shareBool = true;
+                            if(element.hot_article){
+                                shareReadAction1(element.hot_article.id).then(() => shareBool = false);
+                            }
+                            if(shareBool){
+                                let score = element.score - element.norm_money;
+                                shareRead1(element.name,element.action,score);
+                            }
                         }
                     });
                 } else if (res.status == 0) {
@@ -221,23 +226,22 @@ function shareList1() {
 function shareReadAction1(id) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            var timestamp = Date.parse(new Date())/1000;
-            let bodyVal = sharebodyVal.replace(/request_time=(\d+)/, `request_time=${timestamp}`);
-            bodyVal = bodyVal.replace(/action=\w+/, `article_id=${id}`);
+            let bodyVal = editshareBody()
             const url = {
                 url: 'https://kd.youth.cn/WebApi/ShareNew/getShareArticleReward',
                 headers: JSON.parse(shareheaderVal),
-                body: bodyVal,
+                body: `${bodyVal}&article_id=${id}`,
             }
             $.post(url, async(error, response, data) => {
                 res = JSON.parse(data)
                 if (res.status == 1) {
-                    detail += `【分享文章】+${res.data.score}个青豆\n`
-                    return true;
+                    detail += `【分享文章】+${res.data.score}个青豆\n`;
                 } else if (res.status == 0) {
                     detail += `【分享文章】 ${res.msg}\n`;
+                }else{
+                    detail += `【分享文章】 执行失败\n`;
+                    resolve()
                 }
-                resolve()
             })
         },s);
     })
