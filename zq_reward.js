@@ -88,6 +88,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     action = 'beread_extra_reward_one';
                     await shareReadList(action);
                     await dailyTasks();
+                    await showmsg();
                     break;
                 case 3:
                 case 4:
@@ -111,6 +112,7 @@ if (isGetCookie = typeof $request !== 'undefined') {
                     action = 'beread_extra_reward_one';
                     await shareReadList(action);
                     await dailyTasks();
+                    await showmsg();
                     break;
                 case 11:
                 case 12:
@@ -139,7 +141,6 @@ if (isGetCookie = typeof $request !== 'undefined') {
             await dailyTasks();
         }*/
         
-        await showmsg();
     }
 })()
     .catch((e) => $.logErr(e))
