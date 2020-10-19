@@ -179,51 +179,58 @@ function shareList() {
                 headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
-            $.post(url, async(error, response, data) => {
+            $.post(url, (error, response, data) => {
                 res = JSON.parse(data)
                 if (res.status == 1) {
-                    let item = '';
-                    for(var num = 0;num < res.data.taskList.length;num++){
-                        let time = parseInt($.time('HH'));
-                        item = res.data.taskList[num];
-                        if(item.name == '连续转发奖励') continue;
-                        if(item.status == 0 && item.name == '被10位好友阅读'){
-                            let score = item.score - item.norm_money;
-                            await shareRead(item.name,item.action,score)
-                            continue;
-                        }else if(item.status == 0 && (
-                            ( item.name == '清晨分享') ||
-                            ( item.name == '午间分享') ||
-                            ( item.name == '晚间分享')
-                        )){
-                            if($.isNode() && (time > 20 && time < 2) ||
-                              (time > 2 && time < 8) ||
-                              ( time > 8 && time < 14 )){
-                                let score = item.score - item.norm_money;
-                                if(res.data.hot_article){
-                                    await shareReadAction(res.data.hot_article.id);
-                                }
-                                await shareRead(item.name,item.action,score)
-                                continue;
-                            }else if((time > 4 && time < 10) ||
-                              ( time > 10 && time < 16 ) ||
-                              ( time > 16 && time < 22 )){
-                                let score = item.score - item.norm_money;
-                                if(res.data.hot_article){
-                                    await shareReadAction(res.data.hot_article.id);
-                                }
-                                await shareRead(item.name,item.action,score)
-                                continue;
-                            }
-                        }
-                    }
-
+                    await shareCheck(res)
                 } else if (res.status == 0) {
                     detail += `【阅读分享】获取信息失败\n`;
                 }
                 resolve()
             })
         },s);
+    })
+}
+//分享转发判断
+function shareCheck(res) {
+    return new Promise(async(resolve) => {
+        let num = 0;
+        let item = '';
+        while (num < res.data.taskList.length) {
+          let time = parseInt($.time('HH'));
+            item = res.data.taskList[num];
+            num++;
+            if(item.name == '连续转发奖励') continue;
+            if(item.status == 0 && item.name == '被10位好友阅读'){
+                let score = item.score - item.norm_money;
+                await shareRead(item.name,item.action,score)
+                continue;
+            }else if(item.status == 0 && (
+                ( item.name == '清晨分享') ||
+                ( item.name == '午间分享') ||
+                ( item.name == '晚间分享')
+            )){
+                let score = item.score - item.norm_money;
+                if($.isNode() && ( (time > 20 && time < 2) ||
+                (time > 2 && time < 8) ||
+                ( time > 8 && time < 14 )) ){
+                    if(res.data.hot_article){
+                        await shareReadAction(res.data.hot_article.id);
+                    }
+                    await shareRead(item.name,item.action,score)
+                    continue;
+                }else if((time > 4 && time < 10) ||
+                ( time > 10 && time < 16 ) ||
+                ( time > 16 && time < 22 )){
+                    if(res.data.hot_article){
+                        await shareReadAction(res.data.hot_article.id);
+                    }
+                    await shareRead(item.name,item.action,score);
+                    continue;
+                }
+            }
+        }
+      resolve();
     })
 }
 function shareReadAction(id) {
@@ -235,7 +242,7 @@ function shareReadAction(id) {
                 headers: JSON.parse(shareheaderVal),
                 body: `${bodyVal}&article_id=${id}`,
             }
-            $.post(url, async(error, response, data) => {
+            $.post(url, (error, response, data) => {
                 res = JSON.parse(data)
                 if (res.status == 1) {
                     detail += `【分享文章】+${res.data.score}个青豆\n`;
