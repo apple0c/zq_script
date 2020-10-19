@@ -179,7 +179,7 @@ function shareList() {
                 headers: JSON.parse(shareheaderVal),
                 body: bodyVal,
             }
-            $.post(url, (error, response, data) => {
+            $.post(url, async(error, response, data) => {
                 res = JSON.parse(data)
                 if (res.status == 1) {
                     await shareCheck(res)
