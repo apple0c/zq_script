@@ -16,8 +16,8 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     env:
       YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
-      YOUTH_FRIEND_READ_HEADER: ${{ secrets.YOUTH_FRIEND_READ_HEADER }}
-      YOUTH_FRIEND_READ_BODY: ${{ secrets.YOUTH_FRIEND_READ_BODY }}
+      YOUTH_SHARE_HEADER: ${{ secrets.YOUTH_SHARE_HEADER }}
+      YOUTH_SHARE_BODY: ${{ secrets.YOUTH_SHARE_BODY }}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 14.x
