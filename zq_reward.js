@@ -194,12 +194,10 @@ function shareList() {
 //分享转发判断
 function shareCheck(res) {
     return new Promise(async(resolve) => {
-        let num = 0;
         let item = '';
-        while (num < res.data.taskList.length) {
+        for(let num = 0;num < res.data.taskList.length;num++){
           let time = parseInt($.time('HH'));
             item = res.data.taskList[num];
-            num++;
             if(item.name == '连续转发奖励') continue;
             if(item.status == 0 && item.name == '被10位好友阅读'){
                 let score = item.score - item.norm_money;
