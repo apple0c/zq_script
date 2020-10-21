@@ -216,7 +216,7 @@ function shareCheck(res) {
                         await shareReadAction(res.data.hot_article.id);
                     }
                     await shareRead(item.name,item.action,score)
-                    break;
+                    continue;
                 }else if((time > 4 && time < 10) ||
                 ( time > 10 && time < 16 ) ||
                 ( time > 16 && time < 22 )){
@@ -224,7 +224,7 @@ function shareCheck(res) {
                         await shareReadAction(res.data.hot_article.id);
                     }
                     await shareRead(item.name,item.action,score);
-                    break;
+                    continue;
                 }
             }
         }
