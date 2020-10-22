@@ -195,35 +195,29 @@ function shareList() {
 function shareCheck(res) {
     return new Promise(async(resolve) => {
         let item = '';
+        let time = parseInt($.time('HH'));
+        let timeArr = [];
+        if($.isNode()){
+            timeArr = [20,2,2,8,8,14];
+        }else{
+            timeArr = [4,10,10,16,16,22];
+        }
         for(let num = 0;num < res.data.taskList.length;num++){
-          let time = parseInt($.time('HH'));
+            time = parseInt($.time('HH'));
             item = res.data.taskList[num];
             if(item.name == '连续转发奖励') continue;
-            if(item.status == 0 && item.name == '被10位好友阅读'){
-                let score = item.score - item.norm_money;
-                await shareRead(item.name,item.action,score)
-                continue;
-            }else if(item.status == 0 && (
-                ( item.name == '清晨分享') ||
-                ( item.name == '午间分享') ||
-                ( item.name == '晚间分享')
-            )){
-                let score = item.score - item.norm_money;
-                if($.isNode() && ( (time > 20 && time < 2) ||
-                (time > 2 && time < 8) ||
-                ( time > 8 && time < 14 )) ){
-                    if(res.data.hot_article){
+            if(item.status == 0){
+                if( (item.name == '被10位好友阅读') || 
+                ( item.name == '清晨分享' && time > timeArr[0] && time < timeArr[1]) ||
+                ( item.name == '午间分享' && time > timeArr[2] && time < timeArr[3]) ||
+                ( item.name == '晚间分享' && time > timeArr[4] && time < timeArr[5])){
+                    if(res.data.hot_article && 
+                    (item.name == '清晨分享' ||
+                     item.name == '午间分享' ||
+                     item.name == '晚间分享')){
                         await shareReadAction(res.data.hot_article.id);
                     }
                     await shareRead(item.name,item.action,score)
-                    continue;
-                }else if((time > 4 && time < 10) ||
-                ( time > 10 && time < 16 ) ||
-                ( time > 16 && time < 22 )){
-                    if(res.data.hot_article){
-                        await shareReadAction(res.data.hot_article.id);
-                    }
-                    await shareRead(item.name,item.action,score);
                     continue;
                 }
             }
