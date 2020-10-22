@@ -216,6 +216,7 @@ function shareCheck(res) {
                     item.name == '晚间分享')){
                     await shareReadAction(res.data.hot_article.id);
                 }
+                let score = item.score - item.norm_money;
                 await shareRead(item.name,item.action,score)
                 continue;
             }
