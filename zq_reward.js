@@ -206,20 +206,18 @@ function shareCheck(res) {
             time = parseInt($.time('HH'));
             item = res.data.taskList[num];
             if(item.name == '连续转发奖励') continue;
-            if(item.status == 0){
-                if( (item.name == '被10位好友阅读') || 
-                ( item.name == '清晨分享' && time > timeArr[0] && time < timeArr[1]) ||
-                ( item.name == '午间分享' && time > timeArr[2] && time < timeArr[3]) ||
-                ( item.name == '晚间分享' && time > timeArr[4] && time < timeArr[5])){
-                    if(res.data.hot_article && 
-                    (item.name == '清晨分享' ||
-                     item.name == '午间分享' ||
-                     item.name == '晚间分享')){
-                        await shareReadAction(res.data.hot_article.id);
-                    }
-                    await shareRead(item.name,item.action,score)
-                    continue;
+            if( (item.name == '被10位好友阅读' && item.status == 1) || ( (item.status == 0) &&
+            (( item.name == '清晨分享' && time > timeArr[0] && time < timeArr[1]) ||
+            ( item.name == '午间分享' && time > timeArr[2] && time < timeArr[3]) ||
+            ( item.name == '晚间分享' && time > timeArr[4] && time < timeArr[5])) ) ){
+                if(res.data.hot_article && 
+                (item.name == '清晨分享' ||
+                    item.name == '午间分享' ||
+                    item.name == '晚间分享')){
+                    await shareReadAction(res.data.hot_article.id);
                 }
+                await shareRead(item.name,item.action,score)
+                continue;
             }
         }
       resolve();
