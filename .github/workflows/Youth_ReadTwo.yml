@@ -30,14 +30,14 @@ jobs:
           npm install
           
       - name: '运行 【中青看点自动阅读-文章】'
-        if: env.YOUTH_READ1
+        if: env.YOUTH_READ11
         run: |
           node app.js
         env:
           YOUTH_READ: ${{ secrets.YOUTH_READ_TWO1 }}
 
       - name: '运行 【中青看点自动阅读-文章2】'
-        if: env.YOUTH_READ2
+        if: env.YOUTH_READ22
         run: |
           node app.js
         env:
@@ -51,7 +51,7 @@ jobs:
           YOUTH_READ: ${{ secrets.YOUTH_READ_TWO3 }}
           
       - name: '运行 【中青看点自动阅读-视频2】'
-        if: env.YOUTH_READ4
+        if: env.YOUTH_READ44
         run: |
           node app.js
         env:
