@@ -34,25 +34,25 @@ jobs:
         run: |
           node app.js
         env:
-          YOUTH_READ: env.YOUTH_READ1
+          YOUTH_READ: ${{ secrets.YOUTH_READ_TWO1 }}
 
       - name: '运行 【中青看点自动阅读-文章2】'
         if: env.YOUTH_READ2
         run: |
           node app.js
         env:
-          YOUTH_READ: env.YOUTH_READ2
+          YOUTH_READ: ${{ secrets.YOUTH_READ_TWO2 }}
           
       - name: '运行 【中青看点自动阅读-视频】'
         if: env.YOUTH_READ3
         run: |
           node app.js
         env:
-          YOUTH_READ: env.YOUTH_READ3
+          YOUTH_READ: ${{ secrets.YOUTH_READ_TWO3 }}
           
       - name: '运行 【中青看点自动阅读-视频2】'
         if: env.YOUTH_READ4
         run: |
           node app.js
         env:
-          YOUTH_READ: env.YOUTH_READ4
+          YOUTH_READ: ${{ secrets.YOUTH_READ_TWO4 }}
