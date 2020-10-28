@@ -96,7 +96,8 @@ function getHelp() {
             console.log(`\n您的助力码shareId(互助码每天都是变化的)\n\n"${data.data.shareId}",\n`);
             console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\nhttp://jd.turinglabs.net/helpcode/add/${data.data.shareId}\n`);
             await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
-              console.log(resp);
+              console.log(resp.body);
+              $.msg($.name,resp.body,'');
               return
               if (resp.statusCode === 200) {
                 const { body } = resp;
