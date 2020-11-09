@@ -5,8 +5,8 @@ name: zq_reward
 
 on:
   workflow_dispatch:
-  #schedule:
-  #   - cron: '12 22,23,3,4,11,12 * * *'
+  schedule:
+     - cron: '12 23,4,12 * * *'
   #watch:
   #  types: started
 
