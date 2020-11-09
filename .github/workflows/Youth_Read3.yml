@@ -1,0 +1,58 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: youth_readthree
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 2-8/2 * * *'
+  #watch:
+  #  types: [started]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    env:
+      URL: "https://raw.githubusercontent.com/Sunert/Scripts/master/Task/Youth_Read.js"
+      RUNFILE: "Youth_Read.js"
+      YOUTH_READ1: ${{ secrets.YOUTH_READ_THREE1 }}
+      YOUTH_READ2: ${{ secrets.YOUTH_READ_THREE2 }}
+      YOUTH_READ3: ${{ secrets.YOUTH_READ_THREE3 }}
+      YOUTH_READ4: ${{ secrets.YOUTH_READ_THREE4 }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: npm install
+        run: |
+          npm install
+          
+      - name: '运行 【中青看点自动阅读-文章】'
+        if: env.YOUTH_READ1
+        run: |
+          node app.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ_THREE1 }}
+
+      - name: '运行 【中青看点自动阅读-文章2】'
+        if: env.YOUTH_READ2
+        run: |
+          node app.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ_THREE2 }}
+          
+      - name: '运行 【中青看点自动阅读-视频】'
+        if: env.YOUTH_READ3
+        run: |
+          node app.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ_THREE3 }}
+          
+      - name: '运行 【中青看点自动阅读-视频2】'
+        if: env.YOUTH_READ4
+        run: |
+          node app.js
+        env:
+          YOUTH_READ: ${{ secrets.YOUTH_READ_THREE4 }}
