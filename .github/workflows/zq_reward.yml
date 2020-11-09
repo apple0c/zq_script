@@ -25,11 +25,11 @@ jobs:
         with:
           node-version: 14.x
       - name: npm install
-        if: env.YOUTH_FRIEND_READ_HEADER
+        if: env.YOUTH_SHARE_BODY
         run: |
           npm install
       - name: '运行 【中青看点_奖励】'
-        if: env.YOUTH_FRIEND_READ_HEADER
+        if: env.YOUTH_SHARE_BODY
         run: |
           node zq_reward.js
           
