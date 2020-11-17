@@ -20,15 +20,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: npm install
+        #if: env.XMLY_SPEED_COOKIE
+        run: |
+          npm install
+
+      - name: '运行 【喜马拉雅极速版】'
+        #if: env.XMLY_SPEED_COOKIE
+        run: |
+          node app_py.js
+
       - name: 'Set up Python'
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
          
       - name: 'Install requirements'
-        run: pip install -r ./requirements.txt 
+        run: pip install -r ./requirements.txt
+
+      - name: 'run 喜马拉雅极速版' 
+        run: python3 ./xmly_speed.py 
         
-      - name: '运行 【喜马拉雅极速版】'
-        #if: env.XMLY_SPEED_COOKIE
-        run: |
-          python3 app_py.js

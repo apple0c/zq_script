@@ -12,30 +12,21 @@ async function downFile() {
     let file = await download(URL, './')
     await fs.writeFileSync(`./${runFile}`, file, 'utf8')
 }
-async function deleteFile(path) {
+async function deleteFile() {
   // 查看文件result.txt是否存在,如果存在,先删除
-  const fileExists = await fs.existsSync(path);
+  const fileExists = await fs.existsSync(runFile);
   // console.log('fileExists', fileExists);
   if (fileExists) {
-    const unlinkRes = await fs.unlinkSync(path);
+    console.log('存在旧文件，删除\n')
+    const unlinkRes = await fs.unlinkSync(runFile);
     // console.log('unlinkRes', unlinkRes)
   }
 }
 async function start() {
+    await deleteFile();
+    console.log('删除旧文件\n')
     // 下载最新代码
     await downFile();
     console.log('下载代码完毕')
-    // 执行
-    await exec(`python3 ${runFile} >> result.txt`);
-    console.log('执行完毕')
-
-    let content = "";
-    if (fs.existsSync(path)) {
-      content = fs.readFileSync(path, "utf8");
-    }
-    console.log(content)
-    console.log('运行完成后，删除下载的文件\n')
-    await deleteFile(path);
-    await deleteFile(`./${runFile}`);
 }
 start()
