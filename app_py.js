@@ -14,11 +14,11 @@ async function downFile() {
 }
 async function deleteFile() {
   // 查看文件result.txt是否存在,如果存在,先删除
-  const fileExists = await fs.existsSync(runFile);
+  const fileExists = await fs.existsSync(`./${runFile}`);
   // console.log('fileExists', fileExists);
   if (fileExists) {
     console.log('存在旧文件，删除\n')
-    const unlinkRes = await fs.unlinkSync(runFile);
+    const unlinkRes = await fs.unlinkSync(`./${runFile}`);
     // console.log('unlinkRes', unlinkRes)
   }
 }

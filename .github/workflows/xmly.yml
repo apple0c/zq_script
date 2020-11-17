@@ -30,7 +30,7 @@ jobs:
         run: |
           npm install
 
-      - name: '运行 【喜马拉雅极速版】'
+      - name: '下载文件'
         #if: env.XMLY_SPEED_COOKIE
         run: |
           node app_py.js
@@ -43,6 +43,6 @@ jobs:
       - name: 'Install requirements'
         run: pip install -r ./requirements.txt
 
-      - name: 'run 喜马拉雅极速版' 
-        run: python3 ./xmly_speed.py 
+      - name: 'run 喜马拉雅极速版'
+        run: python3 xmly_speed.py
         
