@@ -8,7 +8,7 @@ on:
   #  types: [started]
 jobs:
   build:
-    timeout-minutes: 10 #超时时间
+    timeout-minutes: 7 #超时时间
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
@@ -29,23 +29,26 @@ jobs:
           node-version: 14.x
 
       - name: npm install
-        #if: env.XMLY_SPEED_COOKIE
+        if: env.XMLY_SPEED_COOKIE
         run: |
           npm install
 
       - name: '下载文件'
-        #if: env.XMLY_SPEED_COOKIE
+        if: env.XMLY_SPEED_COOKIE
         run: |
           node app_py.js
 
       - name: 'Set up Python'
+        if: env.XMLY_SPEED_COOKIE
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
          
       - name: 'Install requirements'
+        if: env.XMLY_SPEED_COOKIE
         run: pip install -r ./requirements.txt
 
       - name: 'run 喜马拉雅极速版'
+        if: env.XMLY_SPEED_COOKIE
         run: python3 xmly_speed.py
         
