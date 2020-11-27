@@ -15,6 +15,7 @@ async function downFile() {
 async function deleteFile() {
   // 查看文件result.txt是否存在,如果存在,先删除
   const fileExists = await fs.existsSync(`./${runFile}`);
+  console.log(fileExists)
   // console.log('fileExists', fileExists);
   if (fileExists) {
     console.log('存在旧文件，删除\n')
@@ -24,7 +25,6 @@ async function deleteFile() {
 }
 async function start() {
     await deleteFile();
-    console.log('删除旧文件\n')
     // 下载最新代码
     await downFile();
     console.log('下载代码完毕')
