@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '*/30 * * * *'
-  #watch:
-  #  types: [started]
+  watch:
+    types: [started]
 jobs:
   build:
     timeout-minutes: 10 #超时时间
